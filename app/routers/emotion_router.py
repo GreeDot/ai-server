@@ -1,6 +1,10 @@
+from typing import List
 from fastapi import APIRouter, HTTPException
-from models import EmotionRequest, EmotionResponse, EmotionsRequest, EmotionsResponse
+from pydantic import Field
+from services.wordcloud_service import generate_and_save_wordclouds, sentences_to_wordcloud, text_preprocessing, upload_file_azure
+from models import EmotionRequest, EmotionResponse, EmotionsRequest, EmotionsResponse, WordCloudRequest, WordCloudResponse
 from services.emotion_service import create_emotion_wordcloud, predict_emotion_from_service
+from collections import Counter
 
 router = APIRouter()
 
@@ -24,11 +28,11 @@ async def predict_emotions_api(request: EmotionsRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.post("/create-emotion-wordcloud")
-async def create_emotion_wordcloud_api(request: EmotionsRequest):
+# 워드 클라우드 생성 및 Azure 업로드 함수
+@router.post("/make-wordcloud")
+async def upload_emotion(request: WordCloudRequest):
     try:
-        emotion_sentences = sum(request.emotions.values(), [])  # 모든 감정 문장을 하나의 리스트로 합침
-        create_emotion_wordcloud(emotion_sentences)
-        return File("/tmp/emotion_wordcloud.png")
+        wordcloud_url = sentences_to_wordcloud(request)
+        return WordCloudResponse(urls=wordcloud_url)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

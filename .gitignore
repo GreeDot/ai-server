@@ -5,6 +5,8 @@ __pycache__/
 /tmp/
 /venv/
 app/pth/model_best_5.pth
+app/tmp/wordcloud_images/*.png
+app/tmp/wordcloud_images/*.jpg
 
 # C extensions
 *.so
