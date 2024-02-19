@@ -1,5 +1,5 @@
 # 기본 이미지로 Ubuntu 22.04 사용
-FROM python:3.10
+FROM ubuntu:22.04
 
 # 비대화적인 프론트엔드로 설정 (Docker 내에서 사용자 입력 없이 설치 가능하게 함)
 ENV DEBIAN_FRONTEND=noninteractive
@@ -10,7 +10,12 @@ RUN apt-get update && apt-get install -y \
     python3.10 \
     python3-pip \
     git \
+    # OpenJDK 17 설치
+    openjdk-17-jdk \
     && rm -rf /var/lib/apt/lists/*
+
+# JAVA_HOME 환경 변수 설정
+ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-amd64
 
 # Python 3.10을 python으로 사용 설정
 RUN ln -s /usr/bin/python3.10 /usr/bin/python

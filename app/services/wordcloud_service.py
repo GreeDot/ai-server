@@ -1,5 +1,4 @@
 from typing import Dict, List
-import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 from collections import Counter
 from konlpy.tag import Okt
@@ -74,12 +73,11 @@ def generate_and_save_wordclouds(word_frequencies, font_path, output_dir) -> lis
         if not top_frequencies:
             top_frequencies = {"": 1}  # 빈 워드 클라우드 처리
         wordcloud = WordCloud(font_path=font_path, width=800, height=800, background_color='white').generate_from_frequencies(top_frequencies)
-        plt.figure(figsize=(5, 5), facecolor=None)
-        plt.axis("off")
-        plt.tight_layout(pad=0)
+        
+        # 이미지 파일로 직접 저장
         file_path = f'{output_dir}/{label}.png'
-        plt.savefig(file_path)
-        plt.close()
+        wordcloud.to_file(file_path)
+        
         saved_files.append(file_path)
     return saved_files
 
