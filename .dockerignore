@@ -1,0 +1,5 @@
+__pycache__/
+/venv/
+/tmp/
+app/pth/model_best_5.pth
+/.git/
