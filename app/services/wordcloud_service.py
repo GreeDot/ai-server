@@ -75,10 +75,8 @@ def generate_and_save_wordclouds(word_frequencies, font_path, output_dir) -> lis
             top_frequencies = {"": 1}  # 빈 워드 클라우드 처리
         wordcloud = WordCloud(font_path=font_path, width=800, height=800, background_color='white').generate_from_frequencies(top_frequencies)
         plt.figure(figsize=(5, 5), facecolor=None)
-        plt.imshow(wordcloud, interpolation='bilinear')
         plt.axis("off")
         plt.tight_layout(pad=0)
-        # PNG 파일로 저장
         file_path = f'{output_dir}/{label}.png'
         plt.savefig(file_path)
         plt.close()
