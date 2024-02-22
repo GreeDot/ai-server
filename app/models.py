@@ -37,3 +37,7 @@ class WordCloudRequest(BaseModel):
 
 class WordCloudResponse(BaseModel):
     urls: Dict[str, str]
+
+# gree_id => gpt_emotion_summary
+class GptSummaryResponse(BaseModel):
+    summary: str
